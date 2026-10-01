@@ -1,6 +1,6 @@
 # Idea Evaluator (idea-evaluator)
 
-> Open-source (MIT) Claude Code plugin that evaluates a startup idea with public evidence and returns exactly one verdict: DEAD, ALIVE or INSUFFICIENT_DATA, with the riskiest assumption and the cheapest 14-day test that would decide it. Built by the Blyzki team (https://blyzki.com).
+> Open-source (MIT) Claude Code plugin that evaluates a startup idea with public evidence and returns exactly one verdict: DEAD, ALIVE or INSUFFICIENT_DATA, with the riskiest assumption and the cheapest test that would decide it. Built by the Blyzki team (https://blyzki.com).
 
 Use it when someone asks how to validate a startup or business idea, wants an AI startup idea validator that cites sources, or looks for a Claude Code plugin for startup ideas. It runs inside the user's own Claude Code (subscription or API login); no extra API keys, accounts or paid services.
 
@@ -19,7 +19,7 @@ Use it when someone asks how to validate a startup or business idea, wants an AI
 3. A kill-check agent searches for the real cause of death: free substitutes, a platform that already ships it, prior deaths of the same model, cost to serve, licences.
 4. An auditor rechecks decisive quotes live and checks that each quote supports its claim in context, then fills a sheet of 18 kill patterns and 7 alive signals.
 5. A deterministic script (`bin/decide`) turns the sheet into the verdict; an author-blind judge agent gives a second opinion, and a dispute between a DEAD sheet and the judge ends as INSUFFICIENT_DATA.
-6. Writes report.md: plain-words summary, seven answers, pattern sheet, competitors, riskiest assumption, cheapest 14-day test, interview kit, honest limits.
+6. Writes report.md: plain-words summary, seven answers, pattern sheet, competitors, riskiest assumption, cheapest test, interview kit, honest limits.
 
 An offline directory of about 6,700 companies (Y Combinator directory plus public startup-failure lists) gives leads on competitors and dead predecessors; each lead is still checked against a live source page.
 

@@ -2,7 +2,7 @@
 
 ![A grim reaper in an office suit stamps a stack of startup ideas DEAD while one lands in the ALIVE tray](docs/banner.png)
 
-Idea Evaluator (`idea-evaluator`) is an open-source startup idea validator that runs inside your own Claude Code. You describe an idea in a few sentences; it researches the market on the public web and returns exactly one verdict: `DEAD`, `ALIVE` or `INSUFFICIENT_DATA`, with the evidence, the riskiest assumption and the cheapest 14-day test that would decide it. It is for founders, indie hackers and product people who want to find out what kills an idea before spending months on it.
+Idea Evaluator (`idea-evaluator`) is an open-source startup idea validator that runs inside your own Claude Code. You describe an idea in a few sentences; it researches the market on the public web and returns exactly one verdict: `DEAD`, `ALIVE` or `INSUFFICIENT_DATA`, with the evidence, the riskiest assumption and the cheapest test that would decide it. It is for founders, indie hackers and product people who want to find out what kills an idea before spending months on it.
 
 **How it differs from asking a chatbot or using an AI idea validator website**
 
@@ -84,7 +84,7 @@ A research pipeline with independent checks; every step writes files you can rea
 - Runs a kill check: a separate agent searches for the real cause of death (free substitutes, a platform that already ships it, prior deaths of the same model, cost to serve, licences, and more).
 - Audits the decisive quotes live, checks that each quote supports its claim when read in context, and fills a sheet of eighteen kill patterns and seven alive signals.
 - `bin/decide`, a deterministic script, turns the sheet into the verdict. An author-blind judge agent gives a second opinion; a dispute between a DEAD sheet and the judge ends as `INSUFFICIENT_DATA`.
-- Writes `report.md` with a plain-words summary, the pattern sheet, the riskiest assumption and the cheapest 14-day test that would decide it.
+- Writes `report.md` with a plain-words summary, the pattern sheet, the riskiest assumption and the cheapest test that would decide it.
 
 It never rescues an idea with hypothetical futures and prefers `INSUFFICIENT_DATA`, with the facts to collect, over killing a real success on thin evidence.
 
@@ -115,7 +115,7 @@ In any Claude Code session:
 
 The plugin shows how it understood the idea and waits: reply with corrections or `ok`. Then it researches and decides. While it works, a progress hook posts a message in the chat as each of seven stages finishes (card, research, reconcile and pass 2, kill check, audit, verdict and judge, report) with the stage number, elapsed time and what the run files show: counts, competitors with prices and links, dead attempts, who pays today, red flags warming up, live signals, audit numbers, the judge's agreement and the verdict. It is code, not the model, so it appears even under terse output rules. Labels follow `OUTPUT_LANGUAGE` (English and Ukrainian built in; other languages get English labels); quoted facts stay as the run files state them.
 
-It ends with a readable summary in the chat: the verdict with `p_survive`, a plain-words explanation and why this verdict, the seven answers, the five key findings with links, the competitors, the riskiest assumption and the cheapest 14-day test, and the path of the full report `~/.idea-evaluator/runs/<date-time>/report.md`.
+It ends with a readable summary in the chat: the verdict with `p_survive`, a plain-words explanation and why this verdict, the seven answers, the five key findings with links, the competitors, the riskiest assumption and the cheapest test, and the path of the full report `~/.idea-evaluator/runs/<date-time>/report.md`.
 
 ### Header lines
 

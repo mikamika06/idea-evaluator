@@ -2,7 +2,7 @@
   "name": "idea-evaluator",
   "displayName": "Idea Evaluator",
   "version": "0.8.1",
-  "description": "Tells you if your startup idea is DEAD, ALIVE or INSUFFICIENT_DATA — with verified quotes, a scout that hunts for the real cause of death, an independent judge and the cheapest 14-day test.",
+  "description": "Tells you if your startup idea is DEAD, ALIVE or INSUFFICIENT_DATA — with verified quotes, a scout that hunts for the real cause of death, an independent judge and the cheapest test.",
   "userConfig": {
     "output_language": {
       "title": "Output language",
