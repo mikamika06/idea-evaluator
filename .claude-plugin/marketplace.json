@@ -1,0 +1,16 @@
+{
+  "name": "idea-evaluator",
+  "description": "Evidence-based startup idea evaluation",
+  "owner": {
+    "name": "mikamika06"
+  },
+  "plugins": [
+    {
+      "name": "idea-evaluator",
+      "source": "./plugin",
+      "description": "Evaluates a startup idea with evidence and returns DEAD, ALIVE or INSUFFICIENT_DATA.",
+      "homepage": "https://github.com/mikamika06/idea-evaluator",
+      "repository": "https://github.com/mikamika06/idea-evaluator"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+#!/usr/bin/env python3
+import argparse
+import json
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+
+from runtools import companydir
+
+
+def as_of(v):
+    if not companydir.valid_as_of(v):
+        raise argparse.ArgumentTypeError("use YYYY-MM")
+    return v
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(prog="company-dir", description="Read-only local company directory: YC companies and startup failure collections, masked to AS_OF.")
+    sub = ap.add_subparsers(dest="cmd", required=True)
+    p = sub.add_parser("name")
+    p.add_argument("name")
+    p.add_argument("--as-of", type=as_of, required=True)
+    p.add_argument("--limit", type=int, default=5)
+    p = sub.add_parser("domain")
+    p.add_argument("domain")
+    p.add_argument("--as-of", type=as_of, required=True)
+    p = sub.add_parser("search")
+    p.add_argument("text")
+    p.add_argument("--as-of", type=as_of, required=True)
+    p.add_argument("--dead", action="store_true")
+    p.add_argument("--limit", type=int, default=15)
+    sub.add_parser("info")
+    a = ap.parse_args(argv)
+    if a.cmd == "name":
+        out = companydir.by_name(a.name, a.as_of, a.limit)
+    elif a.cmd == "domain":
+        out = companydir.by_domain(a.domain, a.as_of)
+    elif a.cmd == "search":
+        out = companydir.search(a.text, a.as_of, a.limit, a.dead)
+    else:
+        out = companydir.info()
+    json.dump(out, sys.stdout, ensure_ascii=False, indent=1)
+    sys.stdout.write("\n")
+
+
+if __name__ == "__main__":
+    main()

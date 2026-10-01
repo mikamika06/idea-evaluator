@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+import json
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+
+from runtools.rule import decide
+from runtools.runctx import load_context
+from runtools.runcheck import _findings
+
+if len(sys.argv) != 2:
+    print("usage: decide <run_dir>/verdict.json", file=sys.stderr)
+    sys.exit(2)
+path = sys.argv[1]
+run_dir = os.path.dirname(os.path.abspath(path))
+with open(path) as f:
+    verdict = json.load(f)
+draft = os.path.basename(path) != "verdict.json"
+ctx = load_context(run_dir, with_judge=not draft)
+if draft and ctx.get("support") is None:
+    ctx["run"] = None
+print(json.dumps(decide(verdict, _findings(run_dir), ctx), indent=1, ensure_ascii=False))

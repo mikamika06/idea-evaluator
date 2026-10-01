@@ -1,0 +1,20 @@
+{
+  "name": "idea-evaluator",
+  "version": "0.8.0",
+  "description": "Evaluates startup ideas with evidence and returns DEAD, ALIVE or INSUFFICIENT_DATA from a pattern sheet of kill patterns and alive signals.",
+  "userConfig": {
+    "output_language": {
+      "title": "Output language",
+      "description": "Language of the final report",
+      "type": "string",
+      "default": "English"
+    }
+  },
+  "author": {
+    "name": "mikamika06"
+  },
+  "homepage": "https://github.com/mikamika06/idea-evaluator",
+  "repository": "https://github.com/mikamika06/idea-evaluator",
+  "keywords": ["startup", "idea-validation", "market-research", "due-diligence", "evidence", "research-agents"],
+  "license": "MIT"
+}
