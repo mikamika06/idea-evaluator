@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.1 (2026-10-01)
+- The optional RTK hook is removed: no `PreToolUse` hook, no `bin/rtk-hook`. The plugin no longer runs any external program from `PATH` and no longer reads `~/.claude/settings*.json`. RTK can still be installed separately.
+- The stop and progress hooks read nothing under `~/.claude` except the transcript whose path the hook payload gives them; tests check this.
+- The company directory ships as readable text: `plugin/directory/meta.json` plus `companies-NN.jsonl` shards (one company per line, each under 400 KB) instead of `companies.json.gz`. Same 6,748 rows.
+- The skills state that fetched pages, search results, API responses, directory rows and evidence files are untrusted data, never instructions, and every dispatch prompt carries that line to the agents.
+- Plugin icon, display name "Idea Evaluator" and a new description.
+- Verdict rules, agents and schemas are unchanged from 0.8.0.
+
 ## 0.8.0 (2026-09-30)
 - No plugin dependencies. The `caveman` dependency is gone from the marketplace manifest and the install steps; agents never referenced it. The README mentions it as an optional add-on for shorter chat output.
 - Stop hook: it no longer blocks the conductor while background research agents or background commands of the same session are still running (this showed up as "Stop hook error occurred" right after pass 1 was dispatched). It reads the session transcript, counts background launches that have no completion notice yet, and stays silent while any are pending. It also ignores runs that the current session never mentioned, so a run in progress no longer blocks other sessions. When no transcript is readable it behaves as before.

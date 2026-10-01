@@ -1,11 +1,12 @@
-import gzip
 import json
 import math
 import re
 from difflib import SequenceMatcher
 from pathlib import Path
 
-DATA = Path(__file__).resolve().parent.parent / "directory" / "companies.json.gz"
+DATA = Path(__file__).resolve().parent.parent / "directory"
+META = "meta.json"
+SHARDS = "companies-*.jsonl"
 FAILURE_URL = re.compile(r"(failory\.com/|kaggle\.com/datasets/|cbinsights\.com/research/|startups\.rip|lootdrop\.com|autopsy\.io)", re.I)
 DEAD = {"dead", "inactive", "closed"}
 FAILURE_IDS = {"failory", "kaggle", "cbinsights"}
@@ -78,9 +79,13 @@ def load(path=None):
     path = Path(path or DATA)
     key = str(path)
     if key not in _cache:
-        with gzip.open(path, "rt", encoding="utf-8") as f:
+        with open(path / META, encoding="utf-8") as f:
             data = json.load(f)
-        rows = data.get("companies") or []
+        rows = []
+        for shard in sorted(path.glob(SHARDS)):
+            with open(shard, encoding="utf-8") as f:
+                rows += [json.loads(line) for line in f if line.strip()]
+        data["companies"] = rows
         for r in rows:
             r["_n"] = norm_name(r.get("name"))
             r["_t"] = set(tokens(" ".join(str(r.get(k) or "") for k in ("name", "does", "death_cause"))))

@@ -1,0 +1,31 @@
+{
+ "built": "2026-09-29",
+ "sources": [
+  {
+   "id": "yc",
+   "name": "Y Combinator company directory via yc-oss/api",
+   "note": "founded is the YC batch year; status is the directory status at status_as_of",
+   "url": "https://yc-oss.github.io/api/companies/all.json"
+  },
+  {
+   "id": "kaggle",
+   "name": "Kaggle dataset dagloxkankwanda/startup-failures",
+   "note": "founded, died and cause as compiled by the dataset author",
+   "url": "https://www.kaggle.com/datasets/dagloxkankwanda/startup-failures"
+  },
+  {
+   "id": "failory",
+   "name": "Failory startup cemetery",
+   "note": "founded, died and cause as written on each cemetery page",
+   "url": "https://www.failory.com/cemetery"
+  },
+  {
+   "id": "cbinsights",
+   "name": "CB Insights startup post-mortems",
+   "note": "post-mortem list",
+   "url": "https://www.cbinsights.com/research/startup-failure-post-mortem/"
+  }
+ ],
+ "status_as_of": "2026-09",
+ "version": 1
+}

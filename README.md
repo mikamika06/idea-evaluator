@@ -30,7 +30,7 @@ The installer may say that the `output_language` option is not set; the default 
 
 Optional add-ons, not required and not installed by the plugin:
 - For shorter chat output you can install [caveman](https://github.com/JuliusBrussee/caveman) (`claude plugin marketplace add JuliusBrussee/caveman`, then `claude plugin install caveman@caveman`). It only affects the style of the main session's messages; research agents, files and verdicts are the same without it.
-- [RTK](https://github.com/rtk-ai/rtk) compresses shell output; the plugin routes Bash commands through it when it is on `PATH` and not already configured.
+- For shorter shell output you can install [RTK](https://github.com/rtk-ai/rtk) yourself; the plugin no longer touches it.
 
 ## Use
 
@@ -104,11 +104,12 @@ Installed hooks are active in every Claude Code session, so here is exactly what
 
 - `Stop` (`bin/stop-hook`): keeps an unfinished evaluation from ending before its files are complete. It acts only on a run that this session started, whose `run.json` says `running` and is less than 12 hours old, and only when no background agent or background command of the session is still pending. It blocks at most 6 times per run. In any other session it does nothing.
 - `PostToolUse` on Agent, Task, Bash, Write, Edit and MultiEdit (`bin/progress-hook`): posts the stage messages described above for the run this session started. Silent otherwise; it never blocks a tool and never goes online.
-- `PreToolUse` on Bash (`bin/rtk-hook`): when RTK is installed and not already configured in `~/.claude/settings.json`, it rewrites Bash commands through `rtk hook claude`. Without RTK it does nothing.
+
+Both hooks read only the run files and the session transcript whose path Claude Code passes to the hook. They read no settings, credentials or other files under `~/.claude`, run no external programs and make no network requests.
 
 ## Company directory
 
-The plugin ships a small offline company directory (`plugin/directory/companies.json.gz`, about 6,700 companies): the Y Combinator directory from the [yc-oss API](https://github.com/yc-oss/api) and the dead companies of the Failory cemetery, CB Insights post-mortems and a Kaggle startup-failure dataset, with name, domain, founding year, death year, status, cause and source links. Research agents look up competitors and dead predecessors in it with `bin/company-dir` before searching the web. It is read-only and never goes online. For an `AS_OF` date, deaths, statuses and failure-collection links that came later are hidden. Every row is a lead: agents still open a source page and quote it before a fact counts as evidence.
+The plugin ships a small offline company directory (about 6,700 companies, plain JSON Lines in `plugin/directory/companies-NN.jsonl` with the source list in `plugin/directory/meta.json`): the Y Combinator directory from the [yc-oss API](https://github.com/yc-oss/api) and the dead companies of the Failory cemetery, CB Insights post-mortems and a Kaggle startup-failure dataset, with name, domain, founding year, death year, status, cause and source links. Research agents look up competitors and dead predecessors in it with `bin/company-dir` before searching the web. It is read-only and never goes online. For an `AS_OF` date, deaths, statuses and failure-collection links that came later are hidden. Every row is a lead: agents still open a source page and quote it before a fact counts as evidence.
 
 ## Limits
 

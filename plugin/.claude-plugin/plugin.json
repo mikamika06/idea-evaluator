@@ -1,7 +1,8 @@
 {
   "name": "idea-evaluator",
-  "version": "0.8.0",
-  "description": "Evaluates startup ideas with evidence and returns DEAD, ALIVE or INSUFFICIENT_DATA from a pattern sheet of kill patterns and alive signals.",
+  "displayName": "Idea Evaluator",
+  "version": "0.8.1",
+  "description": "Tells you if your startup idea is DEAD, ALIVE or INSUFFICIENT_DATA — with verified quotes, a scout that hunts for the real cause of death, an independent judge and the cheapest 14-day test.",
   "userConfig": {
     "output_language": {
       "title": "Output language",
@@ -15,6 +16,14 @@
   },
   "homepage": "https://github.com/mikamika06/idea-evaluator",
   "repository": "https://github.com/mikamika06/idea-evaluator",
-  "keywords": ["startup", "idea-validation", "market-research", "due-diligence", "evidence", "research-agents"],
-  "license": "MIT"
+  "keywords": [
+    "startup",
+    "idea-validation",
+    "market-research",
+    "due-diligence",
+    "evidence",
+    "research-agents"
+  ],
+  "license": "MIT",
+  "icon": "./.claude-plugin/icon.png"
 }
