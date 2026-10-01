@@ -1,10 +1,83 @@
-# idea-evaluator
+# Idea Evaluator — Claude Code plugin that tells you if your startup idea is dead
 
 ![A grim reaper in an office suit stamps a stack of startup ideas DEAD while one lands in the ALIVE tray](docs/banner.png)
 
-A Claude Code plugin that evaluates a startup idea with evidence and returns exactly one verdict: `DEAD`, `ALIVE` or `INSUFFICIENT_DATA`. Research agents collect findings with verbatim quotes, an adversarial scout looks for the real cause of death, an auditor checks every quote, and a script turns the pattern sheet into the verdict.
+Idea Evaluator (`idea-evaluator`) is an open-source startup idea validator that runs inside your own Claude Code. You describe an idea in a few sentences; it researches the market on the public web and returns exactly one verdict: `DEAD`, `ALIVE` or `INSUFFICIENT_DATA`, with the evidence, the riskiest assumption and the cheapest 14-day test that would decide it. It is for founders, indie hackers and product people who want to find out what kills an idea before spending months on it.
+
+**How it differs from asking a chatbot or using an AI idea validator website**
+
+- It looks for the cause of death, not for reasons to like the idea. A separate kill-check agent searches for free substitutes, platforms that already ship the feature, earlier startups that died with the same model, cost to serve and licences.
+- Every finding carries a verbatim quote and a link, and code checks that the quote is on the page. An auditor rechecks the decisive quotes live and whether each quote supports its claim in context.
+- The verdict comes from a deterministic script (`bin/decide`) over a sheet of 18 kill patterns and 7 alive signals, not from the model's mood. An author-blind judge agent gives a second opinion.
+- It says `INSUFFICIENT_DATA`, with the facts to collect, rather than killing a real success on thin evidence or rescuing an idea with hypothetical futures.
+- MIT-licensed, runs on your existing Claude Code login, no extra API keys or accounts; run files stay on your machine.
+
+## Quick install
+
+```bash
+claude plugin marketplace add mikamika06/idea-evaluator
+claude plugin install idea-evaluator@idea-evaluator
+```
+
+Then, in any Claude Code session:
+
+```
+/idea-evaluator:evaluate An AI meeting note-taker for B2B sales teams that pushes notes into the CRM, USD 20 per user per month
+```
+
+Requirements, header lines and measured cost are below.
+
+## Example output
+
+The opening of a real full-depth run (plugin 0.8.0, 2026-10-01) on an AI meeting note-taker for B2B sales teams at USD 20 per seat, sold to small and mid-size teams in the US and EU. It stopped early on a strong kill pattern, so the reconcile pass and kill check did not run, and its report says so:
+
+```
+Verdict: DEAD · need: NEEDED · p_survive 0.1
+Rule D1: one strong pattern at threshold with no allowed rebuttal. KP3: the CRMs
+the payer already pays for (HubSpot Sales Hub, Pipedrive) ship the same notetaker
+at no extra charge (C-0001..C-0005), and Zoom paid plans bundle AI meeting
+summaries (G-0004).
+
+In plain words: The need is real. [...] The problem is that two of the three CRMs
+the idea targets now do this themselves at no extra cost. Pipedrive added its
+notetaker to every plan on 2026-09-29 (C-0003), and HubSpot includes one with paid
+Sales Hub seats (C-0001). [...] Only go on if a 14-day test shows that sales teams
+will pay for something the bundled tools miss.
+
+Cheapest test (14 days): contact 60 sales managers of teams with 5-30 reps [...]
+ask for a paid 1-month pilot at USD 20 per seat. Pass if at least 3 teams pay for
+a pilot, or 6 sign a dated letter of intent. Fewer confirms the kill.
+
+Sources: 109 findings, 96 opened and confirmed by check-quote. The audit checked
+21 decisive findings: all 21 found.
+```
+
+The full report also has the seven answers, the pattern sheet, competitors with prices, the judge's opinion, an interview kit and an honest-limits section listing what the run did not verify.
+
+## FAQ
+
+**Can AI validate a startup idea?**
+Not fully. Only customers who pay validate an idea. What this plugin can do is check an idea against public evidence: who already sells it and at what price, who tried and died, whether the payer has a budget, whether the economics close. It is better at killing ideas with a documented cause of death than at blessing them: `ALIVE` needs a measured pull signal and a passed kill check, and even then it is a reason to run the cheapest test, not a forecast of success.
+
+**How is this different from asking ChatGPT or Claude "is my startup idea good"?**
+A single chat answer is one model's opinion, usually agreeable, with sources you have to check yourself. Here six research agents work in parallel, every finding must quote a page that code has confirmed, a separate agent hunts for the cause of death, an auditor rechecks decisive quotes, a fixed script turns the evidence into the verdict and a blind judge reviews it. When the evidence is thin it says so.
+
+**How much does a run cost and how long does it take?**
+A run is billed like any Claude Code session: on a subscription it is drawn from plan limits, on the API it costs roughly USD 14.7 and 28 minutes for a full run, USD 8.9 and 15 minutes with `MODEL: sonnet`, and USD 3.9-5.6 for a shallow `DEPTH: calibration` screen (measured on 0.8.0, see the table below).
+
+**How accurate is it?**
+Calibration is still thin. On five ideas with a known outcome the shallow `DEPTH: calibration` screen killed no good idea but returned `INSUFFICIENT_DATA` for four of them. Verdicts on the same idea can differ between runs because web search results differ; each report shows the sheet it used. See Limits.
+
+**Does it work for ideas outside the US or in other languages?**
+You can write the idea in any language and get the report in another with `OUTPUT_LANGUAGE`. Research quality depends on what is public online: markets that leave little trace (offline B2B, small local trades, communities the agents cannot read) tend to end as `INSUFFICIENT_DATA`.
+
+**Does it send my idea anywhere?**
+The plugin itself uploads nothing. It makes web requests to public pages and keyless public APIs (Hacker News Algolia, the Arctic Shift Reddit archive, the Wayback Machine) and uses Claude Code's own search; run files are written to `~/.idea-evaluator/runs/`. Your idea goes to the model provider like any Claude Code prompt.
 
 ## What it does
+
+A research pipeline with independent checks; every step writes files you can read.
+
 
 - Rewrites the idea as a card (customer, payer, market, price, sales motion, business kind, and what it had to assume) and, unless `MODE: batch` is set, asks you to confirm or correct it.
 - Answers seven decisive questions (pain, current spend, competitors and dead predecessors, payer and budget, channel, unit economics, law and timing) with six research agents working in parallel. Every finding carries a verbatim quote and a link, and code checks that the quote is on the page.

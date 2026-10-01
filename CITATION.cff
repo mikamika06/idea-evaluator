@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use or refer to this software, please cite it as below."
+type: software
+title: "Idea Evaluator: a Claude Code plugin for evidence-based startup idea evaluation"
+abstract: "An open-source Claude Code plugin that evaluates a startup idea with public evidence and returns DEAD, ALIVE or INSUFFICIENT_DATA. Research agents collect findings with verbatim quotes that code verifies on the source page, a kill-check agent searches for the cause of death, an auditor rechecks decisive quotes, a deterministic rule turns a pattern sheet into the verdict, and an author-blind judge gives a second opinion."
+authors:
+  - name: "Blyzki team"
+    website: "https://blyzki.com"
+  - alias: "mikamika06"
+version: "0.8.1"
+date-released: "2026-10-01"
+license: MIT
+repository-code: "https://github.com/mikamika06/idea-evaluator"
+url: "https://blyzki.com/en/idea-evaluator.html"
+keywords:
+  - startup idea validation
+  - idea validator
+  - claude code plugin
+  - ai agents
+  - market research
+  - startup failure
